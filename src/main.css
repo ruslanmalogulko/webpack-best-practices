@@ -1,0 +1,18 @@
+body {
+    color: red;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    height: 100vh;
+}
+
+img {
+    border-radius: 100%;
+    width: 300px;
+    height: 200px;
+    box-shadow: 0 0 20px black;
+}
