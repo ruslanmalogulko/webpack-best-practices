@@ -32,14 +32,12 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
+                test: /\.styl$/,
                 use: [
-                    {
-                        loader: "style-loader"
-                    },
-                    {
-                        loader: "css-loader"
-                    }
+                    { loader: "style-loader" },
+                    { loader: "css-loader" },
+                    { loader: "postcss-loader" },
+                    { loader: "stylus-loader" }
                 ]
             },
             {
@@ -69,7 +67,8 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new HTMLWebpackPlugin({
-            template: './src/index.html'
+            template: './src/index.ejs',
+            title: 'Links journal'
         })
     ]
 }

@@ -38,3 +38,25 @@ To restart server content as well on changes, should be added:
 `module.hot.accept` definition which modules to accept to HMR (example './counter.js')
 add `react-hot-loader/babel` into the `.babelrc` plugins section
 add `require('react-hot-loader/patch') into the main.js to maintain internal state with HMR
+
+## AUTOPREFIXER
+
+`npm i postcss postcss-loader`
+```js
+// add appropriate loader to selected style files test
+test: /\.styl$/,
+user: [
+    { loader: "style-loader" },
+    { loader: "css-loader" },
+    { loader: "postcss-loader" },
+    { loader: "stylus-loader" }
+]
+
+```
+add `postcss.config.js` file with appropriate config
+and add content:
+```js
+module.exports = {
+    plugins: [require("autoprefixer")]
+}
+```
