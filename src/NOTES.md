@@ -87,6 +87,7 @@ heroku config
 ## CSS PERFORMANCE
 Instanll `mini-css-extract-plugin` which extacts css from each js which requires css.
 In `webpack.config.prod` file:
+
 ```js
 {
     test: /\.styl$/,
@@ -98,5 +99,12 @@ In `webpack.config.prod` file:
     ]
 },
 ```
+
 and `new MiniCSSExtractPlugin(),` should be listed in plugins section. As an option it could be passed `filename` like`: `"[name]-[contenthash].css"`
 To minify content of css `optimize-css-assets-webpack-plugin` should be installed
+
+## JS minification
+
+```js
+npm i babel-minify babel-minify-webpack-plugin
+```

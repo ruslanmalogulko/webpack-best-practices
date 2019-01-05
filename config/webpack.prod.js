@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -15,7 +16,7 @@ module.exports = {
         filename: "[name]-bundle.js",
         path: path.resolve(__dirname, "../dist"),
     },
-    devtool: 'source-map',
+    // devtool: 'source-map',
     module: {
         rules: [
             {
@@ -67,6 +68,7 @@ module.exports = {
         new HTMLWebpackPlugin({
             template: './src/index.ejs',
             title: 'Links journal'
-        })
+        }),
+        new MinifyPlugin()
     ]
 }

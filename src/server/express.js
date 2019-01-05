@@ -4,7 +4,7 @@ import path from "path";
 const server = express();
 
 const webpack = require("webpack");
-const config = require("../../config/webpack.dev");
+const config = require(`../../config/webpack.${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'}`);
 const compiler = webpack(config);
 const staticMiddleware = express.static("dist");
 const webpackDevMiddleware = require("webpack-dev-middleware")(
