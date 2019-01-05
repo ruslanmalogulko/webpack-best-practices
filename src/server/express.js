@@ -19,6 +19,8 @@ server.use(webpackDevMiddleware);
 server.use(webpackHotMiddleware);
 server.use(staticMiddleware);
 
-server.listen(8080, () => {
-    console.log("Server is listening");
+const PORT = process.env.PORT || 8080;
+
+server.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 })

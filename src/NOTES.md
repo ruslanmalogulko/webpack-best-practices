@@ -60,3 +60,26 @@ module.exports = {
     plugins: [require("autoprefixer")]
 }
 ```
+
+## PRODUCTION WITH HEROKU
+first we need install `heroku-cli`:
+```bash
+brew install heroku/brew/heroku
+```
+all configuration will be stored in `Procfile`.
+Add `prod` script to package.json file:
+```js
+"prod": "NODE_ENV=production node src/server/main.js"
+```
+To create new heroku application:
+```bash
+heroku create
+```
+To add something to heroku config:
+```bash
+heroku config:set NODE_ENV=production
+```
+To view exising heroku config
+```bash
+heroku config
+```
