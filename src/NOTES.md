@@ -83,3 +83,20 @@ To view exising heroku config
 ```bash
 heroku config
 ```
+
+## CSS PERFORMANCE
+Instanll `mini-css-extract-plugin` which extacts css from each js which requires css.
+In `webpack.config.prod` file:
+```js
+{
+    test: /\.styl$/,
+    use: [
+        { loader: MiniCSSExtractPlugin.loader },
+        { loader: "css-loader" },
+        { loader: "postcss-loader" },
+        { loader: "stylus-loader" }
+    ]
+},
+```
+and `new MiniCSSExtractPlugin(),` should be listed in plugins section. As an option it could be passed `filename` like`: `"[name]-[contenthash].css"`
+To minify content of css `optimize-css-assets-webpack-plugin` should be installed
