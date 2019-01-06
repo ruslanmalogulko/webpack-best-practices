@@ -129,3 +129,24 @@ and add minify plugin to `webpack.prod.js`.
 There is a competition between UglifyJS and BabelMinify. So, it makes sense to try also:
 `npm i uglifyjs-webpack-plugin`. But it has troubles with support es6 compilation. Official docs recomment to use
 babel-minify instead.
+
+## GZIP compression
+
+In order to supply proper compression it should be defined like:
+
+```js
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+...
+plugins: [
+    new CompressionWebpackPlugin({
+        algorithm: 'gzip'
+    })
+]
+```
+
+Unfortunately for now Heroku doesn't support compression. So, it should be defined in Express with
+
+```js
+var expressStaticGzip = require("express-static-gzip");
+server.use(expressStaticGzip('dist'));
+```
