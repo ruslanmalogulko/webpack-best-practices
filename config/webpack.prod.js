@@ -5,6 +5,7 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const BrotliWebpackPlugin = require('brotli-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -73,6 +74,7 @@ module.exports = {
         new MinifyPlugin(),
         new CompressionWebpackPlugin({
             algorithm: 'gzip'
-        })
+        }),
+        new BrotliWebpackPlugin()
     ]
 }

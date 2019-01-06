@@ -24,7 +24,10 @@ if (!isProd) {
     server.use(webpackHotMiddleware);
     server.use(staticMiddleware);
 } else {
-    server.use(expressStaticGzip('dist'));
+    server.use(expressStaticGzip('dist', {
+        enableBrotli: true,
+        orderPreference: ['br']
+    }));
 }
 
 const PORT = process.env.PORT || 8080;
