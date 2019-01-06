@@ -127,4 +127,5 @@ To minify content of css `optimize-css-assets-webpack-plugin` should be installe
 `npm i babel-minify babel-minify-webpack-plugin`
 and add minify plugin to `webpack.prod.js`.
 There is a competition between UglifyJS and BabelMinify. So, it makes sense to try also:
-`npm i uglifyjs-webpack-plugin`
+`npm i uglifyjs-webpack-plugin`. But it has troubles with support es6 compilation. Official docs recomment to use
+babel-minify instead.

@@ -70,7 +70,7 @@ module.exports = {
             template: './src/index.ejs',
             title: 'Links journal'
         }),
-        // new MinifyPlugin(),
-        new UglifyJSPlugin()
+        new MinifyPlugin(),
+        // new UglifyJSPlugin()
     ]
 }
