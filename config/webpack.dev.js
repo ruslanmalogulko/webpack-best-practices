@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     output: {
@@ -93,12 +93,12 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        // new HTMLWebpackPlugin({
-        //     template: './src/index.ejs',
-        //     title: 'Links journal'
-        // }),
-        // new BundleAnalyzerPlugin({
-        //     generateStatsFile: true
-        // })
+        new BundleAnalyzerPlugin({
+            generateStatsFile: true
+        }),
+        new HTMLWebpackPlugin({
+            template: './src/index.ejs',
+            title: 'Links journal'
+        })
     ]
 }

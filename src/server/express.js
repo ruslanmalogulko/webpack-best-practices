@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 var expressStaticGzip = require("express-static-gzip");
 const React = require('react');
 const ReactDomServer = require('react-dom/server');
@@ -38,6 +37,7 @@ server.get('*', (req,res) => {
     <html>
         <head>
             <link href="/main.css" rel="stylesheet" />
+            <title>Hello title !!!</title>
         </head>
         <body>
             <div id="react-root">

@@ -182,3 +182,60 @@ new BundleAnalyzerPlugin({
     generateStatsFile: true
 })
 ```
+
+## SSR and webpack for express content compilation
+
+For making webpack transpile server related code `webpack-node-externals` package is needed;
+Webpack needs separate config for server transpilation in which:
+
+```js
+const nodeExternals = require("webpack-node-externals");
+
+module.exports = {
+    entry: {
+        server: [
+            "./src/server/main.js"
+        ]
+    },
+    output: {
+        filename: '[name]-bundle.js',
+        path: path.resolve(__dirname, "../build")
+    },
+    target: "node", //istead of default "web"
+    externals: nodeExternals,
+}
+```
+
+For SSR:
+
+```js
+// express.js
+const ReactDomServer = require('react-dom/server');
+import AppRoot from '../components/appRoot';
+
+//...
+
+server.get('*', (req,res) => {
+    res.send(`
+    <html>
+        <head>
+            <link href="/main.css" rel="stylesheet" />
+        </head>
+        <body>
+            <div id="react-root">
+                ${ReactDomServer.renderToString(<AppRoot />)}
+            </div>
+            <script src="vendors~main-bundle.js"></script>
+            <script src="main-bundle.js"></script>
+        </body>
+    </html>
+    `);
+})
+```
+
+This will serve html content (so, no need in any html loaders any more). `AppRoot` component is passed inside.
+
+For dev mode (if only content is changing) currently we can use `npm start`.
+For server changes: `"dev": "nodemon --inspect --watch build --watch src/server build/server-bundle.js"`. Currently
+we're looking on changes related to server-bundle. So, we should rut it in tandem with:
+`npm run build:server`.

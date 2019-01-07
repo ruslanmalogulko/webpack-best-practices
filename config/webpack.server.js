@@ -1,5 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
@@ -40,43 +39,18 @@ module.exports = {
                     }
                 ]
             },
-            // {
-            //     test: /\.html$/,
-            //     use: [
-            //         {
-            //             loader: "html-loader",
-            //             options: {
-            //                 attrs: ["img:src"]
-            //             }
-            //         }
-            //     ]
-            // },
             {
                 test: /\.jpg$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
-                            name: "images/[name].[ext]"
+                            name: "images/[name].[ext]",
+                            emitFile: false
                         }
                     }
                 ]
             }
         ]
-    },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-            cacheGroups: {
-                vendor: {
-                    name: 'vendor',
-                    chunks: 'initial',
-                    minChunks: 2
-                }
-            }
-        }
-    },
-    plugins: [
-        new webpack.NamedModulesPlugin()
-    ]
+    }
 }

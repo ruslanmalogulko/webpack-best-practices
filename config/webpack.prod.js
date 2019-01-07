@@ -70,7 +70,6 @@ module.exports = {
     },
     plugins: [
         new OptimizeCssAssetsPlugin(),
-        new webpack.NamedModulesPlugin(),
         new MiniCSSExtractPlugin({
             filename: '[name].css'
         }),
