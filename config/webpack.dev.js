@@ -5,6 +5,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         main: [
+            "webpack-hot-middleware/client?reload=true",
             "./src/main.js"
         ]
     },
@@ -65,7 +66,7 @@ module.exports = {
         ]
     },
     plugins: [
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new HTMLWebpackPlugin({
             template: './src/index.ejs',
