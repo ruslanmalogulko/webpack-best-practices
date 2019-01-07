@@ -43,7 +43,7 @@ To restart server content as well on changes, should be added:
 `import { appContainer } from 'react-hot-loader'` in app.js module
 `module.hot.accept` definition which modules to accept to HMR (example './counter.js')
 add `react-hot-loader/babel` into the `.babelrc` plugins section
-add `require('react-hot-loader/patch') into the main.js to maintain internal state with HMR
+add `require('react-hot-loader/patch')` into the main.js to maintain internal state with HMR
 
 ## AUTOPREFIXER
 
@@ -149,4 +149,36 @@ Unfortunately for now Heroku doesn't support compression. So, it should be defin
 ```js
 var expressStaticGzip = require("express-static-gzip");
 server.use(expressStaticGzip('dist'));
+```
+
+## CODE SPLITTING (CHUNKS)
+
+Code splitting is handled through `optimization` configuration section:
+
+```js
+optimization: {
+    splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+            vendor: {
+                name: 'vendor',
+                chunks: 'initial',
+                minChunks: 2
+            }
+        }
+    }
+}
+```
+
+Cached groups help to take control over the building process of chunks and naming.
+To have a visual control over the bundle content:
+`npm i webpack-bundle-analyzer`
+
+```js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+// in plugins section:
+new BundleAnalyzerPlugin({
+    generateStatsFile: true
+})
 ```

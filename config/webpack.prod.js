@@ -31,6 +31,18 @@ module.exports = {
             ...commonConfig.module.rules
         ]
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    name: 'vendor',
+                    chunks: 'initial',
+                    minChunks: 2
+                }
+            }
+        }
+    },
     plugins: [
         new OptimizeCssAssetsPlugin(),
         new webpack.NamedModulesPlugin(),
