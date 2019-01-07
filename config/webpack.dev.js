@@ -1,8 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const commonConfig = require('./webpack.common');
 
 module.exports = {
+    ...commonConfig,
     entry: {
         main: [
             "webpack-hot-middleware/client?reload=true",
@@ -10,10 +12,6 @@ module.exports = {
         ]
     },
     mode: "development",
-    output: {
-        filename: "[name]-bundle.js",
-        path: path.resolve(__dirname, "../dist"),
-    },
     devServer: {
         contentBase: "dist",
         overlay: true,
@@ -26,13 +24,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                use: {
-                    loader: "babel-loader"
-                },
-                exclude: /node_modules/
-            },
-            {
                 test: /\.styl$/,
                 use: [
                     { loader: "style-loader" },
@@ -41,28 +32,7 @@ module.exports = {
                     { loader: "stylus-loader" }
                 ]
             },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: "html-loader",
-                        options: {
-                            attrs: ["img:src"]
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.jpg$/,
-                use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            name: "images/[name].[ext]"
-                        }
-                    }
-                ]
-            }
+            ...commonConfig.module.rules
         ]
     },
     plugins: [

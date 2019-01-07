@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import postData from '../../data/post.md';
 
 export default class extends PureComponent {
     state = {
@@ -12,8 +13,9 @@ export default class extends PureComponent {
             <div className="profile">
                 <h1>{heading}</h1>
                 <img src={require("../images/test.jpg")} />
-                <div className="content">
-                     {bio}
+                <div className="content" dangerouslySetInnerHTML={{
+                    __html: postData.__content
+                }}>
                 </div>
             </div>
         )
