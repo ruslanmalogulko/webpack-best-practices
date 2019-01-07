@@ -1,1 +1,2 @@
-require("./express.js")
+require('@babel/register');
+require("./express.js");

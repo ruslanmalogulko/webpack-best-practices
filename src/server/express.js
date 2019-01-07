@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 var expressStaticGzip = require("express-static-gzip");
+const React = require('react');
+const ReactDomServer = require('react-dom/server');
+import AppRoot from '../components/appRoot';
 
 const server = express();
 
@@ -29,6 +32,23 @@ if (!isProd) {
         orderPreference: ['br']
     }));
 }
+
+server.get('*', (req,res) => {
+    res.send(`
+    <html>
+        <head>
+            <link href="/main.css" rel="stylesheet" />
+        </head>
+        <body>
+            <div id="react-root">
+                ${ReactDomServer.renderToString(<AppRoot />)}
+            </div>
+            <script src="vendors~main-bundle.js"></script>
+            <script src="main-bundle.js"></script>
+        </body>
+    </html>
+    `);
+})
 
 const PORT = process.env.PORT || 8080;
 
