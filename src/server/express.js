@@ -1,54 +1,45 @@
 const express = require('express');
 var expressStaticGzip = require("express-static-gzip");
-const React = require('react');
-const ReactDomServer = require('react-dom/server');
-import AppRoot from '../components/appRoot';
+const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 
 const server = express();
 
 const webpack = require("webpack");
 const isProd = process.env.NODE_ENV === 'production';
-const config = require(`../../config/webpack.${isProd ? 'prod' : 'dev'}`);
-const compiler = webpack(config);
 
-const webpackDevMiddleware = require("webpack-dev-middleware")(
-    compiler,
-    config.devServer
-);
-const webpackHotMiddleware = require("webpack-hot-middleware")(
-    compiler
-);
+const configClient = require(`../../config/webpack.${isProd ? 'prod' : 'dev'}-client`);
+const configServer = require(`../../config/webpack.${isProd ? 'prod' : 'dev'}-server`);
+const compiler = webpack([configClient, configServer]);
+const [clientCompiler, serverCompiler] = compiler.compilers;
 
 if (!isProd) {
-    const staticMiddleware = express.static("dist");
+    const webpackDevMiddleware = require("webpack-dev-middleware")(
+        compiler,
+        configClient.devServer
+    );
+    const webpackHotMiddleware = require("webpack-hot-middleware")(
+        clientCompiler,
+        configClient.devServer
+    );
 
     server.use(webpackDevMiddleware);
     server.use(webpackHotMiddleware);
-    server.use(staticMiddleware);
+    server.use(webpackHotServerMiddleware(compiler));
 } else {
-    server.use(expressStaticGzip('dist', {
-        enableBrotli: true,
-        orderPreference: ['br']
-    }));
-}
+    webpack([ configClient, configServer ]).run((err, stats) => {
+        if (err) {
+            console.log(err);
+        }
+        const render = require('../../build/prod-server-bundle.js').default;
 
-server.get('*', (req,res) => {
-    res.send(`
-    <html>
-        <head>
-            <link href="/main.css" rel="stylesheet" />
-            <title>Hello title !!!</title>
-        </head>
-        <body>
-            <div id="react-root">
-                ${ReactDomServer.renderToString(<AppRoot />)}
-            </div>
-            <script src="vendors~main-bundle.js"></script>
-            <script src="main-bundle.js"></script>
-        </body>
-    </html>
-    `);
-})
+        server.use(expressStaticGzip('dist', {
+            enableBrotli: true,
+            orderPreference: ['br']
+        }));
+
+        server.get('*', render())
+    })
+}
 
 const PORT = process.env.PORT || 8080;
 

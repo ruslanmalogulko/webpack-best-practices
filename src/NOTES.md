@@ -239,3 +239,23 @@ For dev mode (if only content is changing) currently we can use `npm start`.
 For server changes: `"dev": "nodemon --inspect --watch build --watch src/server build/server-bundle.js"`. Currently
 we're looking on changes related to server-bundle. So, we should rut it in tandem with:
 `npm run build:server`.
+
+## Unification of Server and Client development
+
+We can split configs to have dev client, dev server, prod client and prod server webpack configs.
+Webpack can accept several configs:
+
+```js
+const [clientCompiler, serverCompiler] = webpack([configClient, configServer]).compilers;
+// which can be passed for middlewares like
+const webpackDevMiddleware = require("webpack-dev-middleware")(
+        clientCompiler,
+        configClient.devServer
+    );
+const webpackHotMiddleware = require("webpack-hot-middleware")(
+    clientCompiler,
+    configClient.devServer
+);
+
+
+```

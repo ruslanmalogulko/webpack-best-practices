@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, { hydrate } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import AppRoot from './components/appRoot';
 import data from '../data/bio';
 
 function render(Component) {
-    ReactDOM.render(
+    hydrate(
         <AppContainer>
             <Component heading={data.heading} bio={data.bioText} />
         </AppContainer>,
