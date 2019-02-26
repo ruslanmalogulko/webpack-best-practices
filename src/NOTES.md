@@ -16,7 +16,7 @@ const wepback = require("webpack");
 const config = require("../../config/webpack.dev.js");
 const compiler = webpack(config);
 
-const webpackDevMiddleware = require('webpack-dev-middleware)(
+const webpackDevMiddleware = require('webpack-dev-middleware')(
     compiler,
     config.devServer
 );
@@ -122,7 +122,7 @@ In `webpack.config.prod` file:
 and `new MiniCSSExtractPlugin(),` should be listed in plugins section. As an option it could be passed `filename` like`: `"[name]-[contenthash].css"`
 To minify content of css `optimize-css-assets-webpack-plugin` should be installed
 
-## JS minification
+## JS MINIFICATION
 
 `npm i babel-minify babel-minify-webpack-plugin`
 and add minify plugin to `webpack.prod.js`.
@@ -130,7 +130,7 @@ There is a competition between UglifyJS and BabelMinify. So, it makes sense to t
 `npm i uglifyjs-webpack-plugin`. But it has troubles with support es6 compilation. Official docs recomment to use
 babel-minify instead.
 
-## GZIP compression
+## GZIP COMPRESSION
 
 In order to supply proper compression it should be defined like:
 
@@ -183,7 +183,7 @@ new BundleAnalyzerPlugin({
 })
 ```
 
-## SSR and webpack for express content compilation
+## SSR WITH WEBPACK
 
 For making webpack transpile server related code `webpack-node-externals` package is needed;
 Webpack needs separate config for server transpilation in which:
@@ -256,6 +256,5 @@ const webpackHotMiddleware = require("webpack-hot-middleware")(
     clientCompiler,
     configClient.devServer
 );
-
 
 ```
